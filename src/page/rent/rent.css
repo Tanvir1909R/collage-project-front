@@ -1,0 +1,14 @@
+.rent{
+   margin-top: 120px;
+   padding: 1rem;
+}
+
+.rent-wrapper{
+   display: grid;
+   grid-template-columns: repeat(2,1fr);
+   gap: 30px;
+}
+
+.rate{
+   margin-top: 50px;
+}

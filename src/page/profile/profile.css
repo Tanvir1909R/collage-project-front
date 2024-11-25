@@ -1,0 +1,31 @@
+.profile_wrapper{
+    padding: 2rem 1rem;
+    margin-top: 100px;
+}
+
+.form_div{
+    border: 1px solid rgb(169, 169, 169);
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.form_div .left h3{
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.notification-section{
+    margin-top: 20px;
+}
+.notification-section > h1{
+    margin-bottom: 20px;
+}
+.notification-section .notification{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem;
+    border: 1px solid gray;
+    margin-bottom: 20px;
+}

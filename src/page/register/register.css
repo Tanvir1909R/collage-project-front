@@ -1,0 +1,18 @@
+.register_container {
+  height: 100vh;
+}
+
+#contact-htmlForm select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+option {
+  background: rgb(0 0 0 / 20%);
+  color: black;
+}
