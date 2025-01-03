@@ -4,6 +4,7 @@ import Navbar from "../../components/navBar/Navbar";
 import { GContext } from "../../context/GlobalContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   const [notification, setNotification] = useState({});
@@ -74,9 +75,11 @@ const Profile = () => {
 
         axios
           .post(`${import.meta.env.VITE_API_URL}/cars`, filterData)
-          .then((res) => {
-            console.log("car added");
-          });
+          .then(() => {
+            toast.success("car added");
+          }).catch(()=>{
+            toast.error("Something is wrong!");
+          })
       });
   };
 
@@ -212,73 +215,79 @@ const Profile = () => {
                 </div>
               )}
             </div>
-            <div className="notification-section">
-              <h1>Notification</h1>
+            {user && (
+              <div className="notification-section">
+                <h1>Notification</h1>
 
-              {notification.for === "driver" ? (
-                <>
-                  {notification?.data?.reverse().map((notify) => (
-                    <div className="notification" key={notify._id}>
-                      <div>
-                        <img
-                          src={notify.carId.image}
-                          alt="car"
-                          style={{ width: "60px" }}
-                        />
-                        <h4>{notify.carId.name}</h4>
-                        <p>Hour: {notify.hour}</p>
-                        <p>Total price: {notify.totalPrice} &#2547;</p>
-                        <p>Customer number: {notify.customerId.number}</p>
-                        <p>Customer name: {notify.customerId.name}</p>
+                {notification.for === "driver" ? (
+                  <>
+                    {notification?.data?.reverse().map((notify) => (
+                      <div className="notification" key={notify._id}>
                         <div>
-                          {notify.paid === false ? (
-                            <>
-                              {notify.accept === false ? (
-                                <>
+                          <img
+                            src={notify.carId.image}
+                            alt="car"
+                            style={{ width: "60px" }}
+                          />
+                          <h4>{notify.carId.name}</h4>
+                          <p>Hour: {notify.hour}</p>
+                          <p>Total price: {notify.totalPrice} &#2547;</p>
+                          <p>Customer number: {notify.customerId.number}</p>
+                          <p>Customer name: {notify.customerId.name}</p>
+                          <p>Booking Date: {new Date(notify.createdAt).toISOString().split("T")[0]}</p>
+                          <div>
+                            {notify.paid === false ? (
+                              <>
+                                {notify.accept === false ? (
+                                  <>
+                                    <button
+                                      onClick={() => handleAccept(notify._id)}
+                                    >
+                                      Accept
+                                    </button>
+                                    <button
+                                      onClick={() => handleReject(notify._id)}
+                                    >
+                                      Reject
+                                    </button>
+                                  </>
+                                ) : (
                                   <button
-                                    onClick={() => handleAccept(notify._id)}
+                                    onClick={() => handlePaid(notify._id)}
                                   >
-                                    Accept
+                                    Paid
                                   </button>
-                                  <button
-                                    onClick={() => handleReject(notify._id)}
-                                  >
-                                    Reject
-                                  </button>
-                                </>
-                              ) : (
-                                <button onClick={()=> handlePaid(notify._id)}>Paid</button>
-                              )}
-                            </>
-                          ) : (
-                            <p>Job completed</p>
-                          )}
+                                )}
+                              </>
+                            ) : (
+                              <p>Job completed</p>
+                            )}
+                          </div>
                         </div>
                       </div>
-                      <button>X</button>
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <>
-                  {notification?.data?.reverse().map((notify, idx) => (
-                    <div className="notification" key={idx}>
-                      <div>
-                        <h4>{notify.message}</h4>
-                        <p>Hour: {notify.hour}</p>
-                        <p>Total price: {notify.totalPrice} &#2547;</p>
-                        {notify?.link && (
-                          <p>
-                            See more <Link to={notify.link}>details</Link>
-                          </p>
-                        )}
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {notification?.data?.reverse().map((notify, idx) => (
+                      <div className="notification" key={idx}>
+                        <div>
+                          <h4>{notify.message}</h4>
+                          <p>Hour: {notify.hour}</p>
+                          <p>Total price: {notify.totalPrice} &#2547;</p>
+                          {notify?.link && (
+                            <p>
+                              See more <Link to={notify.link}>details</Link>
+                            </p>
+                          )}
+                        </div>
+                        <button>X</button>
                       </div>
-                      <button>X</button>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>

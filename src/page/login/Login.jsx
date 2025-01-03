@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import { useContext } from "react";
 import { GContext } from "../../context/GlobalContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const {setUser} = useContext(GContext)
@@ -16,6 +17,7 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((user) => {
         setUser(user.email);
+        toast.success('Successfully login')
       })
       .catch((error) => {
         console.log(error.message);

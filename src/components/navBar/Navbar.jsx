@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./nav.css";
 import { useContext, useEffect, useRef } from "react";
 import { GContext } from "../../context/GlobalContext";
@@ -6,10 +6,12 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import { FaUser } from "react-icons/fa";
 import logo from "../../Assets/logo.png";
+import toast from "react-hot-toast";
 
 
 const Navbar = ({ background, linkColor }) => {
   const { user, setUser } = useContext(GContext);
+  const navigate = useNavigate()
   const nav = useRef();
   const userMenu = useRef();
   const handleBar = () => {
@@ -18,11 +20,12 @@ const Navbar = ({ background, linkColor }) => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        console.log("logout successful");
         setUser(null);
+        navigate('/login')
+        toast.success('Logout successful')
       })
       .catch(() => {
-        console.log("something went wrong");
+        toast.error("something went wrong")
       });
   };
   const handleUserMenu = () => {

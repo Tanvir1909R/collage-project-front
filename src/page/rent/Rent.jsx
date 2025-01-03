@@ -5,7 +5,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { GContext } from "../../context/GlobalContext";
 import { v4 as uuid } from "uuid";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 const Rent = () => {
   const { user } = useContext(GContext);
 
@@ -39,9 +39,10 @@ const Rent = () => {
       accept: false,
     };
     axios.patch(`${import.meta.env.VITE_API_URL}/order`, order).then((res) => {
-      console.log(res.data.data);
-      toast.success("Order send");
-    });
+      toast.success('Order placed')
+    }).catch(er=>{
+      toast.error('something is wrong!')
+    })
   };
 
   return (

@@ -35,7 +35,7 @@ const Cars = () => {
     filterButtons.forEach((button) =>
       button.addEventListener("click", filterCards)
     );
-  }, []);
+  }, [cars]);
 
   return (
     <div className="cars_div">
